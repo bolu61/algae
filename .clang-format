@@ -19,10 +19,8 @@ AlignTrailingComments:
     Kind: Never
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
-AllowBreakBeforeNoexceptSpecifier: Always
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortCompoundRequirementOnASingleLine: true
 AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: Never
@@ -68,7 +66,7 @@ InsertBraces: true
 InsertNewlineAtEOF: true
 InsertTrailingCommas: Wrapped
 KeepEmptyLinesAtEOF: false
-KeepEmptyLinesAtStartOfBlocks: false
+KeepEmptyLinesAtTheStartOfBlocks: false
 LambdaBodyIndentation: Signature
 Language: Cpp
 LineEnding: LF
@@ -77,7 +75,7 @@ NamespaceIndentation: All
 PPIndentWidth: 2
 PackConstructorInitializers: CurrentLine
 PointerAlignment: Middle
-QualifierAlignment: Right
+QualifierAlignment: Left
 ReferenceAlignment: Middle
 ReflowComments: true
 RemoveBracesLLVM: false
@@ -94,11 +92,11 @@ SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
 SpaceAroundPointerQualifiers: Both
 SpaceBeforeAssignmentOperators: true
-SpaceBeforeCasColon: false
+SpaceBeforeCaseColon: false
 SpaceBeforeCpp11BracedList: false
-SpaceBeforeCtorInitialierColon: true
+SpaceBeforeCtorInitializerColon: true
 SpaceBeforeInheritanceColon: true
-SpaceBeforeJsonColo: false
+SpaceBeforeJsonColon: false
 SpaceBeforeParens: ControlStatements
 SpaceBeforeRangeBasedForLoopColon: true
 SpaceBeforeSquareBrackets: false
