@@ -1,6 +1,7 @@
 # Directories
 .cache/
 .DS_Store/
+.vscode/
 build/
 
 # Prerequisites
