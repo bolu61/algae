@@ -8,11 +8,11 @@ namespace algae {
   namespace {
 
     template<typename data_type, std::size_t k>
-    struct node {
+    struct k_ary_tree_node {
       template<typename... as>
-      node(as &&... a) : data(std::forward<as>(a)...){};
-      node<data_type, k> * parent;
-      std::array<node<data_type, k> *, k> child;
+      k_ary_tree_node(as &&... a) : data(std::forward<as>(a)...){};
+      k_ary_tree_node<data_type, k> * parent;
+      std::array<k_ary_tree_node<data_type, k> *, k> child;
       data_type data;
     };
 
@@ -23,7 +23,7 @@ namespace algae {
     std::size_t k,
     typename allocator = std::allocator<value>>
   struct k_ary_tree {
-    using node = node<value, k>;
+    using node = k_ary_tree_node<value, k>;
 
     node *& root() {
       return r;
