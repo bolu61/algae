@@ -1,3 +1,8 @@
+# Directories
+.cache/
+.DS_Store/
+build/
+
 # Prerequisites
 *.d
 
@@ -30,4 +35,3 @@
 *.exe
 *.out
 *.app
-build
