@@ -51,5 +51,13 @@ namespace algae {
       alloc::construct(a, u, std::forward<arguments>(args)...);
       return u;
     };
+
+    void erase(node * u) {
+      if (!u) {
+        return;
+      };
+      alloc::destroy(a, u);
+      alloc::deallocate(a, u);
+    }
   };
 }; // namespace algae
