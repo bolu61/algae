@@ -58,6 +58,6 @@ namespace algae {
       };
       alloc::destroy(a, u);
       alloc::deallocate(a, u);
-    }
+    };
   };
 }; // namespace algae
