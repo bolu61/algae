@@ -22,11 +22,6 @@ namespace algae {
       return r;
     };
 
-    void attach(node * u, std::size_t c, node * v) {
-      u->child[c] = v;
-      v->parent = u;
-    };
-
     template<typename... arguments>
     node * make_root(arguments &&... args) {
       node * u = make_node(std::forward<arguments>(args)...);
@@ -37,7 +32,8 @@ namespace algae {
     template<typename... arguments>
     node * make_child(node * u, std::size_t c, arguments &&... args) {
       node * v = make_node(std::forward<arguments>(args)...);
-      attach(u, c, v);
+      u->child[c] = v;
+      v->parent = u;
       return v;
     };
 
