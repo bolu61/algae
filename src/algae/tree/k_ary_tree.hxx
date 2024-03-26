@@ -37,6 +37,14 @@ namespace algae {
       return v;
     };
 
+    void erase(node * u) {
+      if (!u) {
+        return;
+      };
+      alloc::destroy(a, u);
+      alloc::deallocate(a, u);
+    };
+
     private:
 
     using alloc_traits = std::allocator_traits<allocator>;
@@ -50,14 +58,6 @@ namespace algae {
       node * u = alloc::allocate(a, 1);
       alloc::construct(a, u, std::forward<arguments>(args)...);
       return u;
-    };
-
-    void erase(node * u) {
-      if (!u) {
-        return;
-      };
-      alloc::destroy(a, u);
-      alloc::deallocate(a, u);
     };
   };
 }; // namespace algae
