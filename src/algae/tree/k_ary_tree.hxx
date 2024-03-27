@@ -37,12 +37,17 @@ namespace algae {
       return v;
     };
 
-    void erase(node * u) {
+    void erase(node * u, std::size_t i) {
       if (!u) {
         return;
       };
-      alloc::destroy(a, u);
-      alloc::deallocate(a, u);
+      node * v = u->child[i];
+      for (std::size_t j = 0; j < k; j++) {
+        erase(v, j);
+      }
+      u->child[i] = nullptr;
+      alloc::destroy(a, v);
+      alloc::deallocate(a, v);
     };
 
     private:
