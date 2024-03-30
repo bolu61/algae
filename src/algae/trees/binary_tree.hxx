@@ -1,16 +1,17 @@
-#include <algae/trees/k_ary_tree.hxx>
+#include <algae/trees/tree_container.hxx>
+#include <utility>
 
 namespace algae {
-  namespace binary_trees {
+  namespace bare {
     template<typename data_type>
-    struct node {
-      node * parent;
-      node * left;
-      node * right;
+    struct binary_tree {
+      binary_tree * parent;
+      binary_tree * left;
+      binary_tree * right;
       data_type data;
 
       template<typename... as>
-      node(as &&... a) : data(std::forward<as>(a)...){};
+      binary_tree(as &&... a) : parent(nullptr), left(nullptr), right(nullptr), data(std::forward<as>(a)...){};
 
       bool is_left() {
         return this->parent->left == this;
@@ -20,26 +21,27 @@ namespace algae {
         return this->parent->right == this;
       };
     };
-  } // namespace
+  } // namespace bare
 
-  template<typename data_type, typename allocator = std::allocator<data_type>>
-  struct binary_tree : tree<binary_trees::node<data_type>, allocator> {
-    struct node {
-      node * parent;
-      node * left;
-      node * right;
-      data_type data;
+  template<typename data_type, typename allocator = std::allocator<void>>
+  struct binary_tree : tree_container<bare::binary_tree<data_type>, allocator> {
+    using node = bare::binary_tree<data_type>;
 
-      template<typename... as>
-      node(as &&... a) : data(std::forward<as>(a)...){};
+    using tree_container<node, allocator>::root;
+    using tree_container<node, allocator>::emplace_root;
 
-      bool is_left() {
-        return this->parent->left == this;
-      };
+    template<typename... arguments>
+    node * emplace_left(node * u, arguments &&... args) {
+      node * v = this->emplace(u->left, std::forward<arguments>(args)...);
+      v->parent = u;
+      return v;
+    };
 
-      bool is_right() {
-        return this->parent->right == this;
-      };
+    template<typename... arguments>
+    node * emplace_right(node * u, arguments &&... args) {
+      node * v = this->emplace(u->right, std::forward<arguments>(args)...);
+      v->parent = u;
+      return v;
     };
   };
 }; // namespace algae

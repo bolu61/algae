@@ -1,47 +1,39 @@
 #pragma once
 
-#include <algae/trees/tree.hxx>
+#include <algae/trees/tree_container.hxx>
 #include <array>
 #include <cstddef>
 #include <memory>
 
 namespace algae {
-  namespace {
+  namespace bare {
     template<typename data_type, std::size_t k>
-    struct node {
-      node * parent;
-      std::array<node *, k> children;
+    struct k_ary_tree {
+      k_ary_tree * parent;
+      std::array<k_ary_tree *, k> children;
       data_type data;
 
       template<typename... as>
-      node(as &&... a) : data(std::forward<as>(a)...){};
+      k_ary_tree(as &&... a) : parent(nullptr), children(), data(std::forward<as>(a)...){};
     };
-  } // namespace
+  } // namespace bare
 
   template<
     typename data_type,
     std::size_t k,
-    typename allocator = std::allocator<node<data_type, k>>>
-  struct k_ary_tree : public tree<node<data_type, k>, allocator> {
-    using node = algae::node<data_type, k>;
-    using tree<node, allocator>::emplace;
-    using tree<node, allocator>::erase;
+    typename allocator = std::allocator<void>>
+  struct k_ary_tree :
+    private tree_container<bare::k_ary_tree<data_type, k>, allocator> {
+    using node = algae::bare::k_ary_tree<data_type, k>;
+
+    using tree_container<node, allocator>::root;
+    using tree_container<node, allocator>::emplace_root;
 
     template<typename... arguments>
-    node * emplace(node * u, std::size_t i, arguments &&... args) {
-      return emplace(u, u->children[i], std::forward<arguments>(args)...);
+    node * emplace_child(node * u, std::size_t i, arguments &&... args) {
+      node * v = tree_container<node, allocator>::emplace(u->children[i], std::forward<arguments>(args)...);
+      v->parent = u;
+      return v;
     };
   };
-
-  template<typename data_type, std::size_t k, typename allocator>
-  typename k_ary_tree<data_type, k, allocator>::node *&
-  parent(typename k_ary_tree<data_type, k, allocator>::node * u) {
-    return u->parent;
-  }
-
-  template<typename data_type, std::size_t k, typename allocator>
-  std::array<typename k_ary_tree<data_type, k, allocator>::node *, k>
-  children(typename k_ary_tree<data_type, k, allocator>::node * u) {
-    return u->children;
-  }
 }; // namespace algae
